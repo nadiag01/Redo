@@ -8,7 +8,7 @@ import { CreateCharacterComponent } from './create-character/create-character.co
 import { CharacterFactionComponent } from './character-faction/character-faction.component';
 
 export const routes: Routes = [
-  {path:'',component:AppComponent},
+  // {path:'',component:AppComponent},
   {path: 'home', component: HomeComponent},
   {path: 'players', component: PlayersComponent},
   {path: 'signin', component: SigninComponent},
