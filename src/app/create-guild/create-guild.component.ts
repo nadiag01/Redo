@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="create-guild">
   <h2>Create a Guild</h2>
-  <form (ngSubmit)="Submit()" #guildForm="ngForm">
+  <!-- <form (ngSubmit)="Submit()" #guildForm="ngForm"> -->
 
     <!-- Guild Name -->
     <label for="guildName">Guild Name:</label>
@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
     <!-- Description -->
     <label for="description">Description:</label>
     <textarea id="description" name="description" ngModel required></textarea>
-    <div *ngIf="guildForm.submitted && !guildForm.controls.description?.valid">
+    <!-- <div *ngIf="guildForm.submitted && !guildForm.controls.description?.valid"> -->
       Description is required.
     </div>
 
@@ -60,20 +60,20 @@ import { Component } from '@angular/core';
     </div>
 
     <!-- Submit Button -->
-    <button type="submit" [disabled]="!guildForm.valid">Create Guild</button>
-  </form>
+    <!-- <button type="submit" [disabled]="!guildForm.valid">Create Guild</button> -->
+  <!-- </form> -->
 
   <!-- Display Created Guilds -->
   <div ="guilds.length > 0">
     <h3>Created Guilds</h3>
     <ul>
       <li>"let guild of guilds"
-        <strong>{{ guild.guildName }}</strong> - {{ guild.type }} - {{ guild.notificationPreference }}
-        <p>{{ guild.description }}</p>
+        <!-- <strong>{{ guild.guildName }}</strong> - {{ guild.type }} - {{ guild.notificationPreference }} -->
+        <!-- <p>{{ guild.description }}</p> -->
       </li>
     </ul>
   </div>
-</div>
+<!-- </div> -->
 
   `,
   styles: `.create-guild {

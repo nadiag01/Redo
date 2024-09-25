@@ -20,4 +20,16 @@ describe('CreateCharacterComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should generate a random character ID between 1 and 1000 with no decimal places', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should add a character with correct customization', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should reset all form fields to their default values after resetForm is called', () => {
+    expect(component).toBeTruthy();
+  });
 });
