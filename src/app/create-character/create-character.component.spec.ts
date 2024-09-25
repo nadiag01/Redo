@@ -26,7 +26,11 @@ describe('CreateCharacterComponent', () => {
   });
 
   it('should add a character with correct customization', () => {
-    expect(component).toBeTruthy();
+    component.class= 'Mage';
+    component.gender='Female';
+    component.name='Nadia'
+    component.createCharacter()
+
   });
 
   it('should reset all form fields to their default values after resetForm is called', () => {
