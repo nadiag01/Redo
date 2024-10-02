@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CharacterListComponent } from '../character-list/character-list.component';
 
 interface Character {
   name: string;
@@ -19,7 +20,7 @@ export interface NewCharacter{
 @Component({
   selector: 'app-create-character',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, CharacterListComponent],
   template: `
     <div class="order-form-container">
       <form
@@ -69,11 +70,64 @@ export interface NewCharacter{
           <input type="submit" value="Create Character" />
         </fieldset>
       </form>
+      <div class="players-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Class</th>
+          <th>Faction</th>
+          <th>Starting Location</th>
+          <th>Fun Fact</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(character of characters; track character) {
+        <tr class='character-item'>
+          <td>{{ character.name }}</td>
+          <td>{{ character.gender }}</td>
+          <td>{{ character.class }}</td>
+          <td>{{ character.faction }}</td>
+          <td>{{ character.startingLocation }}</td>
+          <td>{{ character.funFact }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <app-character-list [newCharacter]="newCharacter"></app-character-list>
     </div>
   `,
-  styles: ``,
+  styles: `.players-list {
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 70px;
+  }
+
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f4f4f4;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  `,
 })
 export class CreateCharacterComponent {
+  @Output() addCharacter = new EventEmitter<NewCharacter>()
+
   character: Character;
   characterId: number;
   name: string;
@@ -121,10 +175,16 @@ export class CreateCharacterComponent {
       class:  this.class
     }
 
+    this.characters.push(formChar)
+
     this.newCharacter = {
       character: formChar,
       characterId: this.characterId
     }
+
+    this.addCharacter.emit(this.newCharacter)
+
+    this.resetForm()
   }
 
   resetForm(){

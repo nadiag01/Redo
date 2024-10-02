@@ -14,6 +14,6 @@ export const routes: Routes = [
   {path: 'players', component: PlayersComponent},
   {path: 'signin', component: SigninComponent},
   {path: 'create-guild', component: CreateGuildComponent},
-  {path: 'create-character', component: CreateCharacterComponent, canActivate: [authGuard]},
+  {path: 'create-character', component: CreateCharacterComponent},
   {path: 'character-faction', component: CharacterFactionComponent}
 ];

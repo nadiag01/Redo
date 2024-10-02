@@ -1,16 +1,25 @@
 
-import { Component } from '@angular/core';
+import { Component,EventEmitter,Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms'
+import { GuildListComponent } from '../guild-list/guild-list.component';
+
+export interface Guild {
+  guildName: string | null;
+  notificationPreference: string | null;
+  description: string | null;
+  type: string | null;
+  acceptTerms: boolean;
+}
 
 @Component({
   selector: 'app-create-guild',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, GuildListComponent],
   template: `
     <div class="create-guild">
    <h2>Create a Guild</h2>
-   <form [formGroup]="guildForm" (ngSubmit)="submit()">
+   <form [formGroup]="guildForm" (ngSubmit)="submit(); guildForm.reset()">
    <!-- Guild Name -->
    <label for="guildName">Guild Name:</label>
    <input type="text" id="guildName" name="guildName" formControlName="guildName">
@@ -46,16 +55,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular
    </form>
 </div>
 <!-- Display Created Guilds -->
-<div ="guilds.length >
-   0">
-   <h3>Created Guilds</h3>
-   <ul>
-      <li>
-         <!-- <strong>{{ guild.guildName }}</strong> - {{ guild.type }} - {{ guild.notificationPreference }} -->
-         <!-- <p>{{ guild.description }}</p> -->
-      </li>
-   </ul>
-</div>
+  <app-guild-list [guilds]="guildData"></app-guild-list>
   `,
   styles: `.create-guild {
     max-width: 600px;
@@ -74,6 +74,10 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular
   .create-guild input, .create-guild select, .create-guild textarea {
     margin-bottom: 10px;
     padding: 8px;
+  }
+
+  .guild-bottom {
+    padding-bottom: 100px;
   }
 
   button {
@@ -98,7 +102,13 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular
   `
 })
 export class CreateGuildComponent {
-  constructor(private fb: FormBuilder) {}
+  @Output() newguild = new EventEmitter()
+
+  constructor(private fb: FormBuilder) {
+    this.guildData = []
+  }
+
+  guildData: Guild[]
 
   guildForm: FormGroup = this.fb.group({
     guildName: [null, Validators.compose([Validators.required])],
@@ -109,6 +119,8 @@ export class CreateGuildComponent {
   })
 
   submit() {
-
+    console.log("submit data", this.guildForm.value)
+    this.guildData.push(this.guildForm.value)
+    this.newguild.emit(this.guildData)
   }
 }
