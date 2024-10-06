@@ -9,11 +9,11 @@ import { CharacterFactionComponent } from './character-faction/character-faction
 import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
-  // {path:'',component:AppComponent},
+  {path:'',component:HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'players', component: PlayersComponent},
   {path: 'signin', component: SigninComponent},
   {path: 'create-guild', component: CreateGuildComponent},
-  {path: 'create-character', component: CreateCharacterComponent},
+  {path: 'create-character', component: CreateCharacterComponent, canActivate: [authGuard]},
   {path: 'character-faction', component: CharacterFactionComponent}
 ];
